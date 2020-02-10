@@ -1,0 +1,150 @@
+% Physikalisches Praktikum für Fortgeschritene
+%  Universität Hamburg, Institut für Experimentalphysik
+%  Versuch EXP18: "Top-Quark-Paare am LHC"
+
+\def\ExperimentID{EXP18}
+\def\ExperimentTitle{Top-Quark-Paare am LHC}
+
+% ATTENTION:
+%  DOCUMENT NEEDS TO BE COMPILED WITH EITHER XeLaTeX OR LuaLaTeX.
+%  pdfLaTeX WON'T WORK DUE TO THE USE OF THE UNICODE-MATH PACKAGE
+%  WHICH IS NEEDED FOR THE CORPORATE FONT OF UNIVERSITÄT HAMBURG.
+
+% Type set using the memoir document class
+%  Documentation to be found here: https://ctan.org/pkg/memoir
+\documentclass[
+    a4paper,
+    12pt,
+    oneside
+]{memoir}
+
+% Type set in "TheSans UHH" / LucasFonts -- Corporate typeface of Universität Hamburg
+%  If you do not have access to this font yet, get it here, please:
+%  https://www.kus.uni-hamburg.de/themen/oeffentlichkeitsarbeit/corporate-design/hausschrift.html
+%  A system-wide font installation is not needed, you just have to place the
+%  true-type files (.ttf) into the directory specified inside this variable:
+\def\PathToTheSansUHH{./TheSansUHH/}
+\IfFileExists{\PathToTheSansUHH/TheSansUHH-Regular2018.ttf}{
+    \usepackage{unicode-math}
+    \setmainfont[
+        Path            = \PathToTheSansUHH,
+        Extension       = .ttf,
+        UprightFont     = *-Regular2018,
+        UprightFeatures = {SmallCapsFont=*-SemiLightCaps2018},
+        BoldFont        = *-Bold2018,
+        BoldFeatures    = {SmallCapsFont=*-BoldCaps2018},
+        ItalicFont      = *-RegularItalic2018,
+        BoldItalicFont  = *-BoldItalic2018
+    ]{TheSansUHH}
+    \setmathfont{Fira Math}
+    % Fira Math is a font similar to TheSansUHH but comes with dedicated
+    %  math symbols which TheSansUHH does not have. In the following lines
+    %  of code, we again replace the latin and greek math-mode alphanumeric
+    %  letters of Fira Math with the ones of TheSansUHH for a consistent
+    %  typeface. Note that this leads to some warnings which you may ignore.
+    \setmathfont[
+        range           = \mathup/{num,greek,Greek,latin,Latin},
+        Path            = \PathToTheSansUHH,
+        Extension       = .ttf
+    ]{TheSansUHH-Regular2018}
+    \setmathfont[
+        range           = \mathit/{greek,Greek,latin,Latin},
+        Path            = \PathToTheSansUHH,
+        Extension       = .ttf
+    ]{TheSansUHH-RegularItalic2018}
+    \setmathfont[
+        range           = \mathbfup/{num,greek,Greek,latin,Latin},
+        Path            = \PathToTheSansUHH,
+        Extension       = .ttf
+    ]{TheSansUHH-Bold2018}
+    \setmathfont[
+        range           = \mathbfit/{greek,Greek,latin,Latin},
+        Path            = \PathToTheSansUHH,
+        Extension       = .ttf
+    ]{TheSansUHH-BoldItalic2018}
+}{%else
+    % If you didn't put the TheSansUHH .ttf files into the specified directory,
+    %  we will use the dedicated Palatino font (CMS standard!) as a substitute.
+    \usepackage{newpxtext}
+    \usepackage{newpxmath}
+}
+\usepackage[ngerman]{babel}
+
+% Corporate design colors of Universität Hamburg
+%  https://www.fid.uni-hamburg.de/corporate-manual.pdf
+\usepackage{xcolor}
+\definecolor{uhhred}{RGB}{226,0,26}
+\definecolor{uhhblue}{RGB}{0,156,209} % for design elements
+\definecolor{uhhblue-dark}{RGB}{0,133,179} % for blue text
+\definecolor{uhhgray}{RGB}{59,81,91} % alternative to black text
+
+% Page geometry
+\settrims{0.0mm}{0.0mm}
+\setlrmarginsandblock{2.5cm}{2.5cm}{*}
+\setulmarginsandblock{2.5cm}{4.0cm}{*}
+\checkandfixthelayout
+
+% Layout of header and footer
+\makepagestyle{uhh}
+\makeoddhead{uhh}{\textcolor{uhhgray}{\bfseries\scshape Physikalisches Praktikum für Fortgeschrittene}}{}{\textcolor{uhhgray}{\bfseries\scshape \ExperimentID{}. \ExperimentTitle}}
+\def\myhrulefill{\leavevmode\leaders\hrule height 0.382em\hfill\kern 0pt}
+\makeoddfoot{uhh}{}{}{\hspace{0.618\textwidth}\textcolor{uhhblue}{\myhrulefill}\quad\textbf{\textcolor{uhhgray}{\Large Seite \thepage}}}
+% Since this document is oneside, we don't need to set makeeven<foot|head>
+\pagestyle{uhh} % activate the newly defined pagestyle
+\copypagestyle{chapter}{uhh} % copy uhh style to first page of each chapter
+
+% Layout of chapter headings
+\chapterstyle{tandh}
+%\renewcommand{\chapnumfont}{\bfseries\color{uhhred}\fontsize{48pt}{0pt}\selectfont}
+%\renewcommand{\chaptitlefont}{\bfseries\color{black}\Huge}
+
+% PDF metadata and PDF links
+\usepackage[
+    unicode, % required for XeTeX
+    pdfencoding=auto,
+    pdftitle={\ExperimentID{}. \ExperimentTitle},
+    pdfsubject={Physikalisches Praktikum für Fortgeschrittene},
+    linktoc=page,
+    breaklinks,
+    colorlinks,
+    linkcolor=uhhblue-dark,
+    citecolor=uhhred,
+    urlcolor=uhhblue-dark
+]{hyperref}
+
+% More packages...
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+% Styling the markers in item list
+\newcommand{\localtextbulletone}{\textcolor{uhhblue}{\raisebox{0.25ex}{\rule{0.382em}{0.382em}}}}
+\renewcommand{\labelitemi}{\localtextbulletone}
+
+% Some macros
+\newcommand{\zB}{z.\,B.}
+\newcommand{\pT}{$p_\text{T}$}
+\renewcommand{\approx}{\text{ ≈ }}
+
+\begin{document}
+
+\input{titlepage.tex}
+\clearpage
+\OnehalfSpacing
+
+\tableofcontents* % asterisk: no ToC self-reference
+\addtocontents{toc}{~\hfill\textbf{Seite}\par}
+
+\vfill
+\noindent\tiny\textit{\textbf{Titelbild:} Simuliertes LHC-Kollisionsereignis, welches zur Paarerzeugung zweier Top-Quarks geführt hat. Eine solche Abbildung wird als "`event display"' bezeichnet. Gezeigt werden Signale im CMS-Detektor, ausgelöst durch die in alle Richtungen streuenden Endzustandsprodukte der Kollision. Die Top-Quarks selbst erreichen das Detektor-Material nicht, weil sie nahezu instantan wieder zerfallen, und müssen daher aus ihren Zerfallsprodukten rekonstruiert werden. Letzteres ist eine der Aufgaben dieses Praktikumsversuchs. -- Können Sie die Signaturen der Top-Quark-Zerfälle in diesem Ereignis per Auge identifizieren?}
+\clearpage
+\normalsize
+
+\input{sections/introduction.tex}
+\input{sections/theory.tex}
+\input{sections/lhcandcms.tex}
+
+\begin{appendices}
+\input{sections/fragenkatalog.tex}
+\end{appendices}
+
+\end{document}
